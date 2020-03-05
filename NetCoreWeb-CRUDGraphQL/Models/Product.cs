@@ -9,5 +9,6 @@ namespace NetCoreWeb_CRUDGraphQL.Models
     {
         public Guid ID { get; set; }
         public string Name { get; set; }
-    }
+        public virtual ICollection<StoreProduct> StoreProducts { get; set; }
+    }   
 }
