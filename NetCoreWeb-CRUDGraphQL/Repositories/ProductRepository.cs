@@ -31,8 +31,7 @@ namespace NetCoreWeb_CRUDGraphQL.Repositories
 
         public async Task DeleteByIdAsync(Guid id)
         {
-            var store = await GetByIdAsync(id);
-            _context.Products.Remove(store);
+            _context.Products.Remove(await GetByIdAsync(id));
             await _context.SaveChangesAsync();
         }
 
