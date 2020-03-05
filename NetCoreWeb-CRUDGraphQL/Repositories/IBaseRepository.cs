@@ -10,9 +10,9 @@ namespace NetCoreWeb_CRUDGraphQL.Repositories
     {
         Task<List<T>> GetAllAsync();
         Task<T> GetByIdAsync(Guid id);
-        Task CreateAsync(T store);
-        Task UpdateAsync(T store);
-        Task DeleteAsync(T store);
+        Task CreateAsync(T item);
+        Task UpdateAsync(T item);
+        Task DeleteAsync(T item);
         Task DeleteByIdAsync(Guid id);
     }
 }
