@@ -25,15 +25,15 @@ namespace NetCoreWeb_CRUDGraphQL.Repositories
             _context = context;
         }
 
-        public async Task CreateAsync(Store store)
+        public async Task CreateAsync(Store item)
         {
-            _context.Stores.Add(store);
+            _context.Stores.Add(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Store store)
+        public async Task DeleteAsync(Store item)
         {
-            _context.Stores.Remove(store);
+            _context.Stores.Remove(item);
             await _context.SaveChangesAsync();
         }
 
@@ -54,9 +54,9 @@ namespace NetCoreWeb_CRUDGraphQL.Repositories
             return await _context.Stores.Where(x => x.ID == id).FirstOrDefaultAsync();
         }
 
-        public async Task UpdateAsync(Store store)
+        public async Task UpdateAsync(Store item)
         {
-            _context.Stores.Update(store);
+            _context.Stores.Update(item);
             await _context.SaveChangesAsync();
         }
     }
