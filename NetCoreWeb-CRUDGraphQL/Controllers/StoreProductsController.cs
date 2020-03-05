@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCoreWeb_CRUDGraphQL.Data;
 using NetCoreWeb_CRUDGraphQL.Models;
+using NetCoreWeb_CRUDGraphQL.Repositories;
 
 namespace NetCoreWeb_CRUDGraphQL.Controllers
 {
@@ -14,97 +15,70 @@ namespace NetCoreWeb_CRUDGraphQL.Controllers
     [ApiController]
     public class StoreProductsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly StoreProductRepository _repo;
 
         public StoreProductsController(ApplicationDbContext context)
         {
-            _context = context;
+            _repo = new StoreProductRepository(context);
         }
 
         // GET: api/StoreProducts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StoreProduct>>> GetStoreProducts()
         {
-            return await _context.StoreProducts.ToListAsync();
+            return await _repo.GetAllAsync();
         }
 
         // GET: api/StoreProducts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<StoreProduct>> GetStoreProduct(Guid id)
         {
-            var storeProduct = await _context.StoreProducts.FindAsync(id);
-
-            if (storeProduct == null)
-            {
-                return NotFound();
-            }
-
+            var storeProduct = await _repo.GetByIdAsync(id);
+            if (storeProduct == null) return NotFound("Error Not Found");
             return storeProduct;
         }
 
         // PUT: api/StoreProducts/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStoreProduct(Guid id, StoreProduct storeProduct)
         {
-            if (id != storeProduct.ID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(storeProduct).State = EntityState.Modified;
+            if (id != storeProduct.ID) return BadRequest("Error");
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _repo.UpdateAsync(storeProduct);
+                return Ok("Update Ok");
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-                if (!StoreProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest($"Error: {ex.Message}");
             }
-
-            return NoContent();
         }
 
         // POST: api/StoreProducts
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
         public async Task<ActionResult<StoreProduct>> PostStoreProduct(StoreProduct storeProduct)
         {
-            _context.StoreProducts.Add(storeProduct);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetStoreProduct", new { id = storeProduct.ID }, storeProduct);
+            try
+            {
+                await _repo.CreateAsync(storeProduct);
+                return Ok($"Create Ok => {storeProduct.ID}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
         }
 
         // DELETE: api/StoreProducts/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<StoreProduct>> DeleteStoreProduct(Guid id)
         {
-            var storeProduct = await _context.StoreProducts.FindAsync(id);
-            if (storeProduct == null)
-            {
-                return NotFound();
-            }
-
-            _context.StoreProducts.Remove(storeProduct);
-            await _context.SaveChangesAsync();
-
-            return storeProduct;
+            var storeProduct = await _repo.GetByIdAsync(id);
+            if (storeProduct == null) return NotFound("Error Not Found");
+            await _repo.DeleteAsync(storeProduct);
+            return Ok("Delete Ok");
         }
 
-        private bool StoreProductExists(Guid id)
-        {
-            return _context.StoreProducts.Any(e => e.ID == id);
-        }
     }
 }
