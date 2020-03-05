@@ -15,6 +15,7 @@ namespace NetCoreWeb_CRUDGraphQL.Data
         }
 
         public virtual DbSet<Store> Stores { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
 
     }
 }
