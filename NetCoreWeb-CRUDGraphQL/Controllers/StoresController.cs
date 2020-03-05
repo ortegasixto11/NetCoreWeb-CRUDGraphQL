@@ -35,7 +35,7 @@ namespace NetCoreWeb_CRUDGraphQL.Controllers
         public async Task<ActionResult<Store>> GetStore(Guid id)
         {
             var store = await _repo.GetByIdAsync(id);
-            if (store == null) return NotFound("Error");
+            if (store == null) return NotFound("Error Not Found");
             return store;
         }
 
@@ -58,7 +58,7 @@ namespace NetCoreWeb_CRUDGraphQL.Controllers
 
         // POST: api/Stores
         [HttpPost]
-        public async Task<ActionResult<Store>> PostStore(Store store)
+        public async Task<IActionResult> PostStore(Store store)
         {
             try
             {
@@ -73,12 +73,12 @@ namespace NetCoreWeb_CRUDGraphQL.Controllers
 
         // DELETE: api/Stores/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Store>> DeleteStore(Guid id)
+        public async Task<IActionResult> DeleteStore(Guid id)
         {
             var store = await _repo.GetByIdAsync(id);
-            if (store == null) return NotFound();
+            if (store == null) return NotFound("Error Not Found");
             await _repo.DeleteAsync(store);
-            return store;
+            return Ok("Delete Ok");
         }
 
     }
