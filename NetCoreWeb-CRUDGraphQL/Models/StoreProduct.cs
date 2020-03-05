@@ -15,7 +15,7 @@ namespace NetCoreWeb_CRUDGraphQL.Models
         [JsonIgnore]
         public Product Product { get; set; }
         public Guid StoreID { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public Store Store { get; set; }
 
         [NotMapped]
