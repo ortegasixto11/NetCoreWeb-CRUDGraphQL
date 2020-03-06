@@ -65,16 +65,69 @@ namespace UnitTesting
         [Fact]
         public async void PostProduct_Return_Ok()
         {
-            //Arrange  
+            //Arrange
             var controller = new ProductsController(_context);
-            var id = Guid.Parse("55195f54-b6f1-4504-9934-8ca552f0dc9e");
+            var product = new Product {
+                Name = "TEST"
+            };
 
-            //Act  
-            var data = await controller.GetProduct(id);
+            //Act
+            var data = await controller.PostProduct(product);
 
-            //Assert  
-            Assert.IsType<NotFoundObjectResult>(data);
+            //Assert
+            Assert.IsType<OkObjectResult>(data);
         }
+
+        [Fact]
+        public async void PostProduct_NullObject_Return_BadRequest()
+        {
+            //Arrange
+            var controller = new ProductsController(_context);
+
+            //Act
+            var data = await controller.PostProduct(null);
+
+            //Assert
+            Assert.IsType<BadRequestObjectResult>(data);
+        }
+
+        [Fact]
+        public async void PostProduct_EmptyName_Return_BadRequest()
+        {
+            //Arrange
+            var controller = new ProductsController(_context);
+            var product = new Product
+            {
+                Name = ""
+            };
+
+            //Act
+            var data = await controller.PostProduct(product);
+
+            //Assert
+            Assert.IsType<BadRequestObjectResult>(data);
+        }
+        #endregion
+
+        #region Update Product
+        [Fact]
+        public async void PutProduct_Return_Ok()
+        {
+            //Arrange
+            var controller = new ProductsController(_context);
+            var product = new Product
+            {
+                Name = "TEST"
+            };
+
+            //Act
+            var data = await controller.PostProduct(product);
+
+            //Assert
+            Assert.IsType<OkObjectResult>(data);
+        }
+
+
         #endregion
 
 
