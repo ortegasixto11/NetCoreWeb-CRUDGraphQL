@@ -19,6 +19,7 @@ namespace NetCoreWeb_CRUDGraphQL.Repositories
 
         public async Task CreateAsync(Product item)
         {
+            if (string.IsNullOrEmpty(item.Name)) await Task.FromException(new Exception("Product name is required"));
             _context.Products.Add(item);
             await _context.SaveChangesAsync();
         }
