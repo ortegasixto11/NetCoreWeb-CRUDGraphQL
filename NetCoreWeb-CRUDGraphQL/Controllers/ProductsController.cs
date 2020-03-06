@@ -31,11 +31,11 @@ namespace NetCoreWeb_CRUDGraphQL.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(Guid id)
+        public async Task<IActionResult> GetProduct(Guid id)
         {
             var product = await _repo.GetByIdAsync(id);
             if (product == null) return NotFound("Error Not Found");
-            return product;
+            return Ok(product);
         }
 
         // PUT: api/Products/5

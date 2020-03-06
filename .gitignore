@@ -2,3 +2,7 @@
 .vs/
 NetCoreWeb-CRUDGraphQL/bin/
 NetCoreWeb-CRUDGraphQL/obj/
+
+UnitTesting/bin/
+
+UnitTesting/obj/
