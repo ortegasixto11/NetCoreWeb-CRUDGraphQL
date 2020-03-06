@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NetCoreWeb_CRUDGraphQL.Data;
+using NetCoreWeb_CRUDGraphQL.DTO;
 using NetCoreWeb_CRUDGraphQL.Models;
 
 namespace NetCoreWeb_CRUDGraphQL.Controllers
@@ -24,44 +25,30 @@ namespace NetCoreWeb_CRUDGraphQL.Controllers
 
         // GET: api/Search/ProductName
         [HttpGet("{productName}")]
-        public async Task<ActionResult<IEnumerable<SearchDTO>>> Product(string productName)
+        public async Task<ActionResult<IEnumerable<SearchResult>>> Product(string productName)
         {
 
-            List<SearchDTO> results = new List<SearchDTO>();
+            List<SearchResult> results = new List<SearchResult>();
             var res = await _context.Products.Where(x => EF.Functions.Like(x.Name, $"%{productName}%"))
                 .Include(x => x.StoreProducts).ThenInclude(z => z.Store)
                 .ToListAsync();
 
             foreach (var item in res)
             {
-                var result = new SearchDTO();
-                result.ProductName = item.Name;
-                result.Details = new List<SearchDetail>();
-                foreach (var item2 in item.StoreProducts.OrderBy(x => x.Price))
+                foreach (var item2 in item.StoreProducts)
                 {
-                    result.Details.Add(new SearchDetail { 
+                    results.Add(new SearchResult
+                    { 
+                        ProductName = item.Name,
                         Price = item2.Price,
                         StoreName = item2.Store.Name,
                         StoreCity = item2.Store.City
                     });
                 }
-                results.Add(result);
             }
-            return results;
+
+            return results.OrderBy(x => x.Price).ToList();
         }
 
     }
-
-    public class SearchDTO
-    {
-        public string ProductName { get; set; }
-        public List<SearchDetail> Details { get; set; }
-    }
-    public class SearchDetail
-    {
-        public double Price { get; set; }
-        public string StoreName { get; set; }
-        public string StoreCity { get; set; }
-    }
-
 }
