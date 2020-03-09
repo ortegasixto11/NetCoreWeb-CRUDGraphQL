@@ -31,7 +31,7 @@ namespace UnitTesting
         }
 
 
-        #region GetProductById
+        #region Get Product By Id
         [Fact]
         public async void GetProductById_Return_Ok()
         {
@@ -61,7 +61,8 @@ namespace UnitTesting
         }
         #endregion
 
-        #region CreateProduct
+
+        #region Create Product
         [Fact]
         public async void PostProduct_Return_Ok()
         {
@@ -109,6 +110,7 @@ namespace UnitTesting
         }
         #endregion
 
+
         #region Update Product
         [Fact]
         public async void PutProduct_Return_Ok()
@@ -117,18 +119,72 @@ namespace UnitTesting
             var controller = new ProductsController(_context);
             var product = new Product
             {
+                ID = Guid.Parse("a2357f6d-79ab-42d6-dbc7-08d7c1ffbf5e"),
                 Name = "TEST"
             };
 
             //Act
-            var data = await controller.PostProduct(product);
+            var data = await controller.PutProduct(product.ID, product);
 
             //Assert
             Assert.IsType<OkObjectResult>(data);
         }
 
+        [Fact]
+        public async void PutProduct_EmptyName_Returns_BadRequest()
+        {
+            //Arrange
+            var controller = new ProductsController(_context);
+            var product = new Product
+            {
+                ID = Guid.Parse("a2357f6d-79ab-42d6-dbc7-08d7c1ffbf5e"),
+                Name = ""
+            };
 
+            //Act
+            var data = await controller.PutProduct(product.ID, product);
+
+            //Assert
+            Assert.IsType<BadRequestObjectResult>(data);
+        }
+
+        [Fact]
+        public async void PutProduct_NullObject_Returns_BadRequest()
+        {
+            //Arrange
+            var controller = new ProductsController(_context);
+
+            //Act
+            var data = await controller.PutProduct(Guid.Empty, null);
+
+            //Assert
+            Assert.IsType<BadRequestObjectResult>(data);
+        }
         #endregion
+
+
+        //#region Delete Product
+
+        //[Fact]
+        //public async void PutProduct_Return_Ok()
+        //{
+        //    //Arrange
+        //    var controller = new ProductsController(_context);
+        //    var product = new Product
+        //    {
+        //        ID = Guid.Parse("a2357f6d-79ab-42d6-dbc7-08d7c1ffbf5e"),
+        //        Name = "TEST"
+        //    };
+
+        //    //Act
+        //    var data = await controller.PutProduct(product.ID, product);
+
+        //    //Assert
+        //    Assert.IsType<OkObjectResult>(data);
+        //}
+
+
+        //#endregion
 
 
     }

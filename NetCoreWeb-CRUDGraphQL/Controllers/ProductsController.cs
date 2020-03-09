@@ -42,6 +42,7 @@ namespace NetCoreWeb_CRUDGraphQL.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(Guid id, Product product)
         {
+            if (product == null) return BadRequest("Error");
             if (id != product.ID) return BadRequest("Error");
 
             try
@@ -49,7 +50,7 @@ namespace NetCoreWeb_CRUDGraphQL.Controllers
                 await _repo.UpdateAsync(product);
                 return Ok("Update Ok");
             }
-            catch (DbUpdateConcurrencyException ex)
+            catch (Exception ex)
             {
                 return BadRequest($"Error: {ex.Message}");
             }
