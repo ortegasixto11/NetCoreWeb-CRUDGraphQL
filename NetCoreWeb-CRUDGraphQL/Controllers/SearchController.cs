@@ -24,16 +24,27 @@ namespace NetCoreWeb_CRUDGraphQL.Controllers
         }
 
         // GET: api/Search/ProductName
-        [HttpGet("{productName}")]
-        public async Task<ActionResult<IEnumerable<SearchResult>>> Product(string productName)
+        [HttpGet("{productNameSearch}")]
+        public async Task<ActionResult<IEnumerable<SearchResult>>> Product(string productNameSearch)
         {
 
             List<SearchResult> results = new List<SearchResult>();
-            var res = await _context.Products.Where(x => EF.Functions.Like(x.Name, $"%{productName}%"))
+            List<Product> resultSearch = new List<Product>();
+
+            if (string.IsNullOrEmpty(productNameSearch))
+            {
+                resultSearch = await _context.Products
                 .Include(x => x.StoreProducts).ThenInclude(z => z.Store)
                 .ToListAsync();
+            }
+            else
+            {
+                resultSearch = await _context.Products.Where(x => EF.Functions.Like(x.Name, $"%{productNameSearch}%"))
+                .Include(x => x.StoreProducts).ThenInclude(z => z.Store)
+                .ToListAsync();
+            }
 
-            foreach (var item in res)
+            foreach (var item in resultSearch)
             {
                 foreach (var item2 in item.StoreProducts)
                 {
