@@ -163,28 +163,50 @@ namespace UnitTesting
         #endregion
 
 
-        //#region Delete Product
+        #region Delete Product
 
-        //[Fact]
-        //public async void PutProduct_Return_Ok()
-        //{
-        //    //Arrange
-        //    var controller = new ProductsController(_context);
-        //    var product = new Product
-        //    {
-        //        ID = Guid.Parse("a2357f6d-79ab-42d6-dbc7-08d7c1ffbf5e"),
-        //        Name = "TEST"
-        //    };
+        [Fact]
+        public async void DeleteProduct_Returns_Ok()
+        {
+            //Arrange
+            var controller = new ProductsController(_context);
+            var id = Guid.Parse("fb8a9841-c697-49fa-ba6f-08d7c455606e");
 
-        //    //Act
-        //    var data = await controller.PutProduct(product.ID, product);
+            //Act
+            var data = await controller.DeleteProduct(id);
 
-        //    //Assert
-        //    Assert.IsType<OkObjectResult>(data);
-        //}
+            //Assert
+            Assert.IsType<OkObjectResult>(data);
+        }
 
+        [Fact]
+        public async void DeleteProduct_IdNotExists_Returns_NotFound()
+        {
+            //Arrange
+            var controller = new ProductsController(_context);
+            var id = Guid.Parse("454f84ee-323b-469d-aaec-2552a20a0407");
 
-        //#endregion
+            //Act
+            var data = await controller.DeleteProduct(id);
+
+            //Assert
+            Assert.IsType<NotFoundObjectResult>(data);
+        }
+
+        [Fact]
+        public async void DeleteProduct_EmptyId_Returns_NotFound()
+        {
+            //Arrange
+            var controller = new ProductsController(_context);
+            var id = Guid.Empty;
+
+            //Act
+            var data = await controller.DeleteProduct(id);
+
+            //Assert
+            Assert.IsType<NotFoundObjectResult>(data);
+        }
+        #endregion
 
 
     }
