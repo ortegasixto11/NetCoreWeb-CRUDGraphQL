@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th> Name </th>
+            <th> Actions </th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+</table>
+
+<script src="~/js/api-service.js"></script>
+
+<script>
+
+    async function getProducts() {
+        try {
+            let result = await asyncGet('/products')
+            let rows = ""
+            result.forEach(function (item) {
+                rows += `
+                    <tr> 
+                        <td> ${item.name} </td>
+                        <td> <a href="/products/edit/${item.id}"> Edit </a> </td>
+                    </tr>`
+            })
+            document.getElementById("tbody").innerHTML = rows
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    getProducts()
+
+</script>
+
+

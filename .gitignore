@@ -6,3 +6,7 @@ NetCoreWeb-CRUDGraphQL/obj/
 UnitTesting/bin/
 
 UnitTesting/obj/
+
+CRUDGraphQL.Frontend/bin/
+
+CRUDGraphQL.Frontend/obj/
