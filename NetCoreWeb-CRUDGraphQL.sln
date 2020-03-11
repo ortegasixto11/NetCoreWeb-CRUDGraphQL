@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreWeb-CRUDGraphQL", "NetCoreWeb-CRUDGraphQL\NetCoreWeb-CRUDGraphQL.csproj", "{25290B4D-244C-47D4-9718-C635E6CC49CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting", "UnitTesting\UnitTesting.csproj", "{81DE0052-C848-4FEB-979A-967E73DC4C8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTesting", "UnitTesting\UnitTesting.csproj", "{81DE0052-C848-4FEB-979A-967E73DC4C8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDGraphQL.Frontend", "CRUDGraphQL.Frontend\CRUDGraphQL.Frontend.csproj", "{C268000D-B85B-4B88-9748-70939B055A49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{81DE0052-C848-4FEB-979A-967E73DC4C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DE0052-C848-4FEB-979A-967E73DC4C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DE0052-C848-4FEB-979A-967E73DC4C8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C268000D-B85B-4B88-9748-70939B055A49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C268000D-B85B-4B88-9748-70939B055A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C268000D-B85B-4B88-9748-70939B055A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C268000D-B85B-4B88-9748-70939B055A49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
