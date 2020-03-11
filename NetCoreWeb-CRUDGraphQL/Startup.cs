@@ -33,6 +33,15 @@ namespace NetCoreWeb_CRUDGraphQL
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", builder =>
+                    builder.AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowAnyOrigin()
+                );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +51,8 @@ namespace NetCoreWeb_CRUDGraphQL
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseHttpsRedirection();
 
