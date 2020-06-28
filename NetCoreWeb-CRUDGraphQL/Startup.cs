@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NetCoreWeb_CRUDGraphQL.Data;
+using NetCoreWeb_CRUDGraphQL.Repositories;
 
 namespace NetCoreWeb_CRUDGraphQL
 {
@@ -33,6 +34,8 @@ namespace NetCoreWeb_CRUDGraphQL
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
+
+            services.AddScoped<IProduct, ProductRepository>();
 
             services.AddCors(options =>
             {

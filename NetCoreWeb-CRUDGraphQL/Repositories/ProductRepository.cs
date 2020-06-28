@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NetCoreWeb_CRUDGraphQL.Repositories
 {
-    public class ProductRepository : IBaseRepository<Product>
+    public class ProductRepository : IProduct
     {
         private readonly ApplicationDbContext _context;
 
